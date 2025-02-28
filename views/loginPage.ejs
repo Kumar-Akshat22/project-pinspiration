@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <% if(success_msg.length > 0) { %>
+        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded" role="alert">
+            <strong class="font-bold"><%= success_msg %></strong>
+          </div>
+    <% } %>
+
+    <% if(error_msg.length > 0) { %>
+        <div class="absolute top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
+            <span class="inline-block mt-1 mb-1 font-bold">
+                <%= error_msg %>
+            </span>
+        </div>
+    <% } %>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <div class="flex justify-center mb-6">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" alt="Pinterest Logo" class="h-12">
+        </div>
+        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-4">Welcome to Pinterest</h2>
+        <form action="/users/login" method="post" class="space-y-4">
+            <input type="email" name="email" placeholder="Email" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+            <input type="password" name="password" placeholder="Password" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+            <button type="submit" class="w-full bg-red-600 text-white p-3 rounded-lg hover:bg-red-700">Log in</button>
+        </form>
+        <p class="text-center text-gray-600 mt-4">New to Pinterest? <a href="/signupPage" class="text-red-600 font-semibold">Sign up</a></p>
+    </div>
+</body>
+</html>

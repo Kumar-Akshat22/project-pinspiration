@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center min-h-screen p-6">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
+        <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Edit your Profile</h2>
+
+        <!-- Profile Update Form -->
+        <form action="/users/profile/update/<%= user._id %>" method="POST" class="space-y-6"
+            enctype="multipart/form-data">
+            <!-- Profile Picture Section -->
+            <div class="flex flex-col items-center mb-6">
+                <div class="relative w-32 h-32">
+                    <img id="profilePic" class="w-32 h-32 rounded-full border-4 border-gray-300 object-cover"
+                        src="/images/uploads/pins/<%= user.profilePicture %>" alt="Profile Picture">
+                    <label
+                        class="absolute bottom-0 right-0 bg-blue-600 text-white px-2 py-1 rounded-[10px] cursor-pointer shadow-md">
+                        <input type="file" id="profilePicInput" name="profilePic" class="hidden">
+                        <i class="ri-upload-2-line text-lg"></i>
+                    </label>
+                </div>
+            </div>` 
+            <div>
+                <label class="block text-gray-700 font-medium">Name</label>
+                <input type="text" name="name" value="<%= user.name %>"
+                    class="w-full border border-gray-300 rounded-lg p-3 focus:ring focus:ring-blue-300">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium">Username</label>
+                <input type="text" name="username" value="<%= user.username %>"
+                    class="w-full border border-gray-300 rounded-lg p-3 focus:ring focus:ring-blue-300">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium">Email</label>
+                <input type="email" name="email" value="<%= user.email %>"
+                    class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed" readonly>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium">Bio</label>
+                <textarea name="bio" class="w-full border border-gray-300 rounded-lg p-3 focus:ring focus:ring-blue-300"
+                    rows="3"><%= user.bio %></textarea>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-all">
+                Save Changes
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('profilePicInput').addEventListener('change', function (event) {
+            let file = event.target.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('profilePic').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+
+</html>

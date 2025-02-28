@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Pins</title>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* .card-zoom:hover img {
+      transform: scale(1.05);
+    } */
+
+    .container {
+
+      column-count: 3;
+      max-width: 70rem;
+    }
+
+    .img_box img {
+
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="bg-white min-h-screen text-black">
+
+  <!-- Navigation -->
+  <nav class="bg-white sticky top-0 shadow-md px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" alt="Pinterest Logo"
+          class="h-10">
+        <span class="font-bold text-lg">PinSpiration</span>
+      </div>
+      <div class="flex-1 max-w-3xl">
+        <div class="relative">
+          <input type="search" placeholder="Search for pins..."
+            class="w-full px-4 py-2.5 bg-[#E1E1E1] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 placeholder-gray-400">
+          <span class="absolute right-3 top-2.5 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: User Profile & Collections -->
+      <div class="flex items-center gap-6">
+        <a href="/users/collections" class="text-gray-400 hover:text-gray-600 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 7v10c0 1.1.9 2 2 2h14a2 2 0 002-2V7M8 3v4m8-4v4M5 7h14M10 12h4"></path>
+          </svg>
+        </a>
+
+        <div class="relative">
+          <% if (user) { %>
+            <!-- Profile Image Button -->
+            <button id="profileButton" class="flex items-center space-x-2">
+              <img src="/images/uploads/pins/<%= user.profilePicture %>" alt="<%= user.name %>"
+                class="w-12 h-12 rounded-full border-2 border-gray-400 hover:border-gray-200 transition object-cover">
+            </button>
+
+            <!-- Profile Dropdown -->
+            <div id="profileDropdown"
+              class="shadow-md hidden absolute right-0 mt-4 w-52 bg-white text-black rounded-xl p-3">
+
+              <a href="/users/profile/<%= user._id %>"
+                class="flex items-center px-4 py-3 hover:bg-[#E9E9E9] hover:text-black rounded-lg transition">
+                <i class="ri-user-3-line w-5 h-5 mr-3"></i> View Profile
+              </a>
+
+              <a href="/users/collections"
+                class="flex items-center px-4 py-3 hover:bg-[#E9E9E9] hover:text-black rounded-lg transition">
+                <i class="ri-bookmark-line w-5 h-5 mr-3"></i> Collections
+              </a>
+
+              <a href="/users/logout"
+                class="flex items-center px-4 py-3 text-red-400 hover:bg-[#E9E9E9] hover:text-red-600 rounded-lg transition">
+                <i class="ri-logout-box-line w-5 h-5 mr-3 text-red-400"></i> Logout
+              </a>
+            </div>
+            <% } else { %>
+              <!-- Login Button if Not Logged In -->
+              <a href="/loginPage"
+                class="px-5 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-500 flex items-center transition">
+                Login <i class="ri-login-circle-line"></i> 
+              </a>
+              <% } %>
+        </div>
+
+
+      </div>
+  </nav>
+
+  <% if(success_msg.length> 0) { %>
+    <div
+      class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+      role="alert">
+      <p class="font-medium">
+        <%= success_msg %>
+      </p>
+    </div>
+    <% } %>
+
+      <% if(error_msg.length> 0) { %>
+        <div
+          class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+          role="alert">
+          <p class="font-medium">
+            <%= error_msg %>
+          </p>
+        </div>
+        <% } %>
+          <!-- Main Content -->
+          <main class="max-w-[1400px] mx-auto px-4 py-8">
+            <!-- Uniform Grid -->
+            <div class="container">
+              <% pins.forEach(pin=> { %>
+                <div class="bg-white rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 mb-6">
+
+                  <div class="cursor-pointer img_box"
+                    onclick="openModal('<%= pin._id %>', '<%= pin.image %>', '<%= pin.pintitle %>', '<%= pin.pindescription %>', '<%= pin.owner.name %>', '<%= pin.owner.profilePicture %>')">
+
+                    <img src="/images/uploads/pins/<%= pin.image %>" alt="<%= pin.pintitle %>" class="" loading="lazy">
+                  </div>
+
+
+                </div>
+                <% }) %>
+            </div>
+          </main>
+
+          <!-- Modal -->
+          <div id="pinModal" class="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center hidden">
+            <div
+              class="modal-enter-active bg-white max-w-5xl w-full mx-4 rounded-xl shadow-2xl relative overflow-hidden">
+
+              <!-- Close Button -->
+              <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl">
+                <i class="ri-close-line"></i>
+              </button>
+
+              <div class="flex">
+
+                <!-- Enlarged Image Section -->
+                <div class="w-2/3 p-4 flex justify-center items-center">
+                  <div class="rounded-xl overflow-hidden w-full max-h-[85vh] flex justify-center items-center">
+                    <img id="modalImage" src="" alt="Pin Image"
+                      class="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-md">
+                  </div>
+                </div>
+
+                <!-- Pin Details Section -->
+                <div class="w-1/3 p-6 flex flex-col">
+
+                  <!-- Title -->
+                  <h3 id="modalTitle" class="text-2xl font-bold text-gray-900"></h3>
+
+                  <!-- Description -->
+                  <p id="modalDescription" class="text-gray-600 text-sm mt-2"></p>
+
+                  <!-- Owner Info -->
+                  <div class="flex items-center gap-3 mt-4">
+                    <img id="modalOwnerImage" src="" alt="Owner"
+                      class="w-12 h-12 rounded-full border border-gray-300 shadow">
+                    <span id="modalOwnerName" class="text-md font-medium text-gray-800"></span>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="flex items-center gap-4 mt-6">
+
+                    <!-- Save Button -->
+                    <button onclick="savePin()"
+                      class="bg-red-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-red-700 transition-all">
+                      Save
+                    </button>
+
+                    <!-- Like Button -->
+                    <button onclick="likePin()"
+                      class="bg-gray-100 text-gray-800 px-4 py-2.5 rounded-full font-medium hover:bg-gray-200 transition-all">
+                      <div class="flex items-center gap-2">
+                        <i id="like-icon" class="ri-heart-line text-lg"></i>
+                        <span id="likes-count"></span>
+                      </div>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+</body>
+<script>
+
+  async function openModal(id, image, title, description, ownerName, ownerImage) {
+    
+    const modal = document.getElementById("pinModal");
+    modal.dataset.pinId = id;
+
+    console.log("ID: ",id);
+    console.log("Image: ",image);
+    console.log("Title: ",title);
+    console.log("Description: ",description);
+
+    try {
+      // Fetch latest pin data
+      await fetch(`/pins/${id}`, { method: "GET" })
+        .then(response => response.json())
+        .then((data) => {
+          console.log("Data from Backend Route: ", data);
+          // Update modal with latest data
+          document.getElementById('modalImage').src = "/images/uploads/pins/" + image;
+          document.getElementById('modalTitle').textContent = title;
+          document.getElementById('modalDescription').textContent = description;
+          document.getElementById('modalOwnerName').textContent = ownerName;
+          document.getElementById('modalOwnerImage').src = "/images/uploads/pins/" + ownerImage;
+
+          // Update Likes
+          document.getElementById('likes-count').textContent = data.pin.likes.length;
+          
+          const likeIcon = document.getElementById('like-icon');
+          if(data.isLikedByCurrentUser){
+
+            likeIcon.classList.add('ri-heart-fill');
+            likeIcon.classList.remove('ri-heart-line');
+          }
+          else{
+            likeIcon.classList.add('ri-heart-line');
+            likeIcon.classList.remove('ri-heart-fill');
+          }
+
+          // Show modal
+          modal.classList.remove('hidden');
+        })
+    } catch (error) {
+      console.log("Error opening modal:", error.message);
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('pinModal').classList.add('hidden');
+  }
+
+  function savePin() {
+
+    const pinId = document.getElementById("pinModal").dataset.pinId;
+
+    fetch(`/users/save/pin/${pinId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+
+        if (data.success) {
+          location.reload();
+        } else {
+          location.reload();
+        }
+      })
+      .catch((error) => console.error("Error saving pin:", error));
+
+  }
+
+  document.getElementById("profileButton")?.addEventListener("click", function () {
+    let dropdown = document.getElementById("profileDropdown");
+    dropdown.classList.toggle("hidden");
+  });
+
+  async function likePin() {
+    const pinId = document.getElementById("pinModal").dataset.pinId;
+    const likeCountElement = document.getElementById('likes-count');
+    const likeIcon = document.getElementById('like-icon');
+
+    await fetch(`/pins/like/${pinId}`, { method: "POST", headers: { "Content-Type": "application/json" } })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Data from the Backend Request: ", data);
+        if(data.success){
+
+          likeCountElement.textContent = data.likes;
+          likeIcon.classList.toggle("ri-heart-fill" , data.liked);
+          likeIcon.classList.toggle("ri-heart-line" , !data.liked);
+        }
+      })
+      .catch(error => console.error("Error liking pin:", error));
+
+  }
+
+
+
+</script>
+
+</html>
