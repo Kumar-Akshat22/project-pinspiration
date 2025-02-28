@@ -1,6 +1,6 @@
 # Pinspiration — Visual Discovery Platform
 
-A **Pinterest-like Visual Discovery Platform** where users can explore, save, and share image pins with dynamic user interactions and JWT-based authentication.
+A **Pinterest-like Visual Discovery Platform** where users can explore, save pins with dynamic user interactions and JWT-based authentication.
 
 ## 🚀 Features
 - User Authentication with **JWT & Bcrypt Password Hashing** 🔐
@@ -20,7 +20,7 @@ A **Pinterest-like Visual Discovery Platform** where users can explore, save, an
 | JWT          | User Authentication       |
 | Bcrypt       | Password Hashing         |
 | EJS          | Templating Engine        |
-| CSS          | Responsive UI with Flexbox & Grid |
+| TailwindCSS  | Responsive UI with Flexbox & Grid |
 
 ## 📄 Folder Structure
 ```
