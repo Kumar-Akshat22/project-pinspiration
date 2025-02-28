@@ -4,12 +4,13 @@ A **Pinterest-like Visual Discovery Platform** where users can explore, save pin
 
 ## 🚀 Features
 - User Authentication with **JWT & Bcrypt Password Hashing** 🔐
+- RESTful APIs for user management and pin operations
 - Explore Page with **Masonry Grid Layout** 🔍
 - Save Pins to User Profile 📌
 - Pin Details Page with interactive layout
 - **Lazy Loading** for optimized image rendering ⚡
 - Responsive Design across all devices 📱💻
-- RESTful APIs for user management and pin operations
+
 
 ## 🛠️ Tech Stack
 | Technology     | Purpose                    |
@@ -35,8 +36,8 @@ A **Pinterest-like Visual Discovery Platform** where users can explore, save pin
 ## 🔑 How to Run Locally
 1. Clone the repository:
 ```bash
-git clone https://github.com/username/pinnify.git
-cd pinnify
+git clone https://github.com/Kumar-Akshat22/project-pinspiration.git
+cd project-pinspiration
 ```
 
 2. Install dependencies:
@@ -52,7 +53,7 @@ JWT_SECRET=your_secret_key
 
 4. Start the server:
 ```bash
-npm start
+nodemon app.js
 ```
 
 5. Visit **http://localhost:3000** in your browser 🌐
