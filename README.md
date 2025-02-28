@@ -66,10 +66,5 @@ npm start
 ## 📌 Contributing
 Pull requests are welcome! Feel free to open an issue for any feature suggestions or bug reports.
 
-## 📄 License
-This project is licensed under the **MIT License**.
-
----
-
-Made with ❤️ by [Your Name](https://github.com/username)
+Made with ❤️ by [Kumar Akshat](https://github.com/Kumar-Akshat22)
 
