@@ -1,4 +1,4 @@
-# Pinnify — Visual Discovery Platform
+# Pinspiration — Visual Discovery Platform
 
 A **Pinterest-like Visual Discovery Platform** where users can explore, save, and share image pins with dynamic user interactions and JWT-based authentication.
 
